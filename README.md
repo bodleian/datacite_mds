@@ -50,17 +50,22 @@ upload metadata
 
 mint a DOI
 
-	res = mds.mint '10.5072/non-existing-doi', 'http://ora.ox.ac.uk/objects/uuid:<an-existing-uuid>'	
+	res = mds.mint '10.5072/non-existing-doi', 'http://ora.ox.ac.uk/objects/uuid:<an-existing-uuid>'
+	p res # => <Net::HTTPCreated 201 Created readbody=true>	
+	
 
 update dataset for existing DOI
 
 	res = mds.mint '10.5072/existing-doi', 'http://ora.ox.ac.uk/objects/uuid:<new-uuid>'	
+	p res # => <Net::HTTPCreated 201 Created readbody=true>	
 
 ## Tests
 
 Minitest is used for testing. To run all tests, you must set the DATACITE_USR, DATACITE_PWD environment variables and then: 
 
     $ rake test
+
+**Note**: Some of the tests use DOIs and URLs issued to the Bodleian Libraries and can be accessed only by using the Bodleian datacentre authorisation credentials. It is recommended that you substitute these constant variables' values in the test file, with your own datacentre's DOIs and URLs.     
 
 
 ## License
