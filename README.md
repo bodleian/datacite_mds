@@ -2,33 +2,76 @@
 
 
 
-
-## Synopsis
+## What is it?
 
 This gem provides Ruby client connectivity to Datacite's [Metadata store](https://mds.datacite.org/) (MDS). The MDS is a service for data publishers to mint DOIs and register associated metadata. It is aimed mainly at scientific and research data publishers. This gem allows for simple and seamless interaction with the MDS service.
 
-## Code Example
 
-Show what the library does as concisely as possible, developers should be able to figure out **how** your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
-
-## Motivation
-
-A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
 
 ## Installation
 
-Provide code examples and explanations of how to get the project.
+Add this line to your application's Gemfile:
 
-## API Reference
+    gem 'datacite_mds'
 
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install datacite_mds
+
+
+## Usage
+
+create an Mds object (explicit authorization)
+
+    mds = Datacite::Mds.new authorize: {usr: "joe bloggs", pwd: "password"}
+
+create an Mds object (implicit authorization via DATACITE_USR, DATACITE_PWD environment variables)
+
+    mds = Datacite::Mds.new 
+
+create an Mds object for testing (implicit authorization)
+
+	mds = Datacite::Mds.new testing: true    
+
+resolve a DOI
+
+    res = mds.resolve '10.5072/existing-doi'
+    p res # => <Net::HTTPOK 200 OK readbody=true
+
+upload metadata
+
+	res = mds.upload_metadata File.read('metadata.xml')
+	p res # => <Net::HTTPCreated 201 Created readbody=true>
+
+
+mint a DOI
+
+	res = mds.mint '10.5072/non-existing-doi', 'http://ora.ox.ac.uk/objects/uuid:<an-existing-uuid>'	
+
+update dataset for existing DOI
+
+	res = mds.mint '10.5072/existing-doi', 'http://ora.ox.ac.uk/objects/uuid:<new-uuid>'	
 
 ## Tests
 
-Describe and show how to run the tests with code examples.
+Minitest is used for testing. To run all tests, you must set the DATACITE_USR, DATACITE_PWD environment variables and then: 
+
+    $ rake test
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://en.wikipedia.org/wiki/MIT_License), c/o The Chancellor Masters and Scholars of the University of Oxford.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
 
