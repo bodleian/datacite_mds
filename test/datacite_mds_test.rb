@@ -8,7 +8,6 @@ class DataciteMdsTest < Minitest::Test
   NON_EXISTING_DOI_1 = '10.5072/BODLEIAN:xxxyy'
   EXISTING_DOI = '10.5287/BODLEIAN:DR26XX70W'
   EXISTING_URL = 'http://ora.ox.ac.uk/objects/uuid:37897aec-0a18-46f6-b6a7-dd8690fa2797'
-  ALL_DOI_SIZE = 13464 # all DOIS for Bodleian data centre
 
   METADATA = ( File.read( File.dirname(__FILE__) + '/data_samples/metadata1.xml' ) )
 
@@ -41,6 +40,11 @@ class DataciteMdsTest < Minitest::Test
 
   end
 
+  ### GET (metadata)
+  def test_it_gets_metadata_for_existing_doi
+    res = @mds.get_metadata EXISTING_DOI
+    assert_instance_of Net::HTTPOK, res
+  end
 
   ### POST (mint a DOI)
 
@@ -53,10 +57,8 @@ class DataciteMdsTest < Minitest::Test
     res = @mds.upload_metadata METADATA
     assert_instance_of Net::HTTPCreated, res
     assert_match NON_EXISTING_DOI_2, res.body
-
     res = @mds.mint NON_EXISTING_DOI_2, EXISTING_URL
     assert_instance_of Net::HTTPCreated, res
-
   end
 
 end
