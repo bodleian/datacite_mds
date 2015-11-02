@@ -1,5 +1,5 @@
 [![build](https://travis-ci.org/bodleian/datacite_mds.svg)](https://travis-ci.org/bodleian/datacite_mds)
-[![Coverage Status](https://coveralls.io/repos/bodleian/datacite_mds/badge.svg)](https://coveralls.io/r/bodleian/datacite_mds)
+[![Coverage Status](https://coveralls.io/repos/bodleian/datacite_mds/badge.svg?branch=master&service=github)](https://coveralls.io/github/bodleian/datacite_mds?branch=master)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/bodleian/datacite_mds/blob/master/LICENSE.txt)
 
 
