@@ -1,6 +1,7 @@
 [![build](https://travis-ci.org/bodleian/datacite_mds.svg)](https://travis-ci.org/bodleian/datacite_mds)
 [![Coverage Status](https://coveralls.io/repos/bodleian/datacite_mds/badge.svg?branch=master&service=github)](https://coveralls.io/github/bodleian/datacite_mds?branch=master)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/bodleian/datacite_mds/blob/master/LICENSE.txt)
+[![Gem Version](https://badge.fury.io/rb/datacite_mds.svg)](https://badge.fury.io/rb/datacite_mds)
 
 
 
@@ -60,6 +61,12 @@ update dataset for existing DOI
 
 	res = mds.mint '10.5072/existing-doi', 'http://ora.ox.ac.uk/objects/uuid:<new-uuid>'	
 	p res # => <Net::HTTPCreated 201 Created readbody=true>	
+
+get metadata for existing DOI
+
+  	res = mds.get_metadata '10.5072/existing-doi'
+    p res # => <Net::HTTPOK 200 OK readbody=true
+    p res.body # shows the xml metadata
 
 ## Tests
 
