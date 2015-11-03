@@ -11,8 +11,6 @@ module Datacite
   # Wraps up Mds functionality wihin an object
   #
   # @author Fred Heath
-  # @abstract
-  # @since 0.1.0
   # @attr [String] username the Datacentre's authorised username
   # @attr [String] passwd the Datacentre's authorised password
   # @attr [Boolean] test_mode indicates whether to make APi calls
