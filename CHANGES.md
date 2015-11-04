@@ -3,3 +3,9 @@
 
 - First release.
 
+
+0.1.1
+-----------
+
+- Added one more test.
+- Updated README.md
