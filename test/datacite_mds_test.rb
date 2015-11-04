@@ -46,6 +46,13 @@ class DataciteMdsTest < Minitest::Test
     assert_instance_of Net::HTTPOK, res
   end
 
+  ### GET (DOIs)
+  def test_it_gets_all_dois_for_datacentre
+    res = @mds.get_all_dois
+    assert_instance_of Net::HTTPOK, res
+  end
+
+
   ### POST (mint a DOI)
 
   def test_it_wont_mint_doi_without_loaded_metadata
