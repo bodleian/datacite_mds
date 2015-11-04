@@ -50,6 +50,13 @@ upload metadata
 	res = mds.upload_metadata File.read('metadata.xml')
 	p res # => <Net::HTTPCreated 201 Created readbody=true>
 
+get all DOIs for datacentre
+
+    res = mds.get_all_dois
+    if res.instance_of? Net::HTTPOK
+        p res.res.body.split # show all DOIs
+    end
+
 
 mint a DOI
 
@@ -65,8 +72,9 @@ update dataset for existing DOI
 get metadata for existing DOI
 
   	res = mds.get_metadata '10.5072/existing-doi'
-    p res # => <Net::HTTPOK 200 OK readbody=true
-    p res.body # shows the xml metadata
+    if res.instance_of? Net::HTTPOK
+        p res.body # shows the xml metadata
+    end
 
 ## Tests
 
