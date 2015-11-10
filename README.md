@@ -2,6 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/bodleian/datacite_mds/badge.svg?branch=master&service=github)](https://coveralls.io/github/bodleian/datacite_mds?branch=master)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/bodleian/datacite_mds/blob/master/LICENSE.txt)
 [![Gem Version](https://badge.fury.io/rb/datacite_mds.svg)](https://badge.fury.io/rb/datacite_mds)
+[![Inline docs](http://inch-ci.org/github/bodleian/datacite_mds.svg?branch=master)](http://inch-ci.org/github/bodleian/datacite_mds)
 
 
 
