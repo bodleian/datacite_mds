@@ -122,6 +122,21 @@ module Datacite
       call_datacite(request)
     end
 
+
+    # Deletes the metadata associated with the DOI.
+    # @param doi [String] a Data Object identifier
+    # @return [Net::HTTPResponse] Succesful operation will
+    #   return HTTPOK
+    def delete_metadata(doi)
+      @uri.path = RESOURCES[:metadata] + '/' + doi
+      @http = Net::HTTP.new(@uri.host, @uri.port)
+      request = Net::HTTP::Delete.new(@uri.request_uri)
+      call_datacite(request)
+    end
+
+
+ 
+
     private
 
     # Executes an http request, allowing for redirects (3xx codes)

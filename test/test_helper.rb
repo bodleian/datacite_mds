@@ -6,4 +6,5 @@ require 'datacite_mds'
 
 require 'minitest/autorun'
 require "minitest/pride"
+require 'xmlsimple'
 

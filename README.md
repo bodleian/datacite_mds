@@ -28,6 +28,10 @@ Or install it yourself as:
 
 ## Usage
 
+Require the gem
+
+    require 'datacite_mds'
+
 create an Mds object (explicit authorization)
 
     mds = Datacite::Mds.new authorize: {usr: "joe bloggs", pwd: "password"}

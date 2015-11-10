@@ -2,14 +2,19 @@ require 'test_helper'
 
 class DataciteMdsTest < Minitest::Test
 
-  # tests have been designed to reflect the Datacite MDS API documentation	https://mds.datacite.org/static/apidoc
+  # tests have been designed to reflect the Datacite MDS API documentation  https://mds.datacite.org/static/apidoc
 
   NON_EXISTING_DOI_2 = '10.5072/BODLEIAN:xxxORATEST16'
   NON_EXISTING_DOI_1 = '10.5072/BODLEIAN:xxxyy'
   EXISTING_DOI = '10.5287/BODLEIAN:DR26XX70W'
   EXISTING_URL = 'http://ora.ox.ac.uk/objects/uuid:37897aec-0a18-46f6-b6a7-dd8690fa2797'
 
-  METADATA = ( File.read( File.dirname(__FILE__) + '/data_samples/metadata1.xml' ) )
+  METADATA_1 = ( File.read( File.dirname(__FILE__) + '/data_samples/metadata1.xml' ) )
+
+  METADATA_2 = ( File.read( File.dirname(__FILE__) + '/data_samples/metadata2.xml' ) )
+
+  METADATA_2_HASH = XmlSimple.xml_in( METADATA_2 )
+
 
   def setup
     @mds = Datacite::Mds.new(testing: true)
@@ -61,11 +66,26 @@ class DataciteMdsTest < Minitest::Test
   end
 
   def test_it_mints_doi
-    res = @mds.upload_metadata METADATA
+    res = @mds.upload_metadata METADATA_1
     assert_instance_of Net::HTTPCreated, res
     assert_match NON_EXISTING_DOI_2, res.body
     res = @mds.mint NON_EXISTING_DOI_2, EXISTING_URL
     assert_instance_of Net::HTTPCreated, res
+  end
+
+
+  ### DELETE (metadata)
+
+  def test_it_deletes_metadata
+    res = @mds.upload_metadata METADATA_2
+    assert_instance_of Net::HTTPCreated, res
+    doi = METADATA_2_HASH['identifier'].first['content']
+    refute_nil doi
+    assert_instance_of String, doi
+    res = @mds.delete_metadata doi
+    assert_instance_of Net::HTTPOK, res
+    res = @mds.get_metadata doi
+    assert_instance_of Net::HTTPGone, res
   end
 
 end
