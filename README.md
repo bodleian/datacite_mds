@@ -58,13 +58,13 @@ upload metadata
 delete metadata
 
     res = mds.delete_metadata '10.5072/existing-doi'
-    p res # => <Net::HTTPOK 200 OK readbody=true  
+    p res # => <Net::HTTPOK 200 OK readbody=true> 
 
 get all DOIs for datacentre
 
     res = mds.get_all_dois
     if res.instance_of? Net::HTTPOK
-        p res.res.body.split # show all DOIs
+        p res.body.split # show all DOIs
     end
 
 
