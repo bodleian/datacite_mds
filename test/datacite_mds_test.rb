@@ -13,7 +13,13 @@ class DataciteMdsTest < Minitest::Test
 
   METADATA_2 = ( File.read( File.dirname(__FILE__) + '/data_samples/metadata2.xml' ) )
 
+  MALFORMED_METADATA = ( File.read( File.dirname(__FILE__) + '/data_samples/malformed_metadata.xml' ) )
+
+  INVALID_METADATA = ( File.read( File.dirname(__FILE__) + '/data_samples/invalid_metadata.xml' ) )
+
   METADATA_2_HASH = XmlSimple.xml_in( METADATA_2 )
+
+  
 
 
   def setup
@@ -80,6 +86,10 @@ class DataciteMdsTest < Minitest::Test
     res = @mds.upload_metadata METADATA_2
     assert_instance_of Net::HTTPCreated, res
     doi = METADATA_2_HASH['identifier'].first['content']
+
+doc = Nokogiri::XML(METADATA_2)
+puts "======= #{doc.xpath("//identifier[@identifierType='DOI']/text()")}" 
+
     refute_nil doi
     assert_instance_of String, doi
     res = @mds.delete_metadata doi
@@ -87,5 +97,15 @@ class DataciteMdsTest < Minitest::Test
     res = @mds.get_metadata doi
     assert_instance_of Net::HTTPGone, res
   end
+
+  ### non-RESTful operations
+  def test_it_detects_malformed_metadata
+    assert_raises(ArgumentError) { Datacite::Mds.metadata_valid?MALFORMED_METADATA }
+  end
+
+  def test_it_detects_invalid_metadata
+    assert_equal Datacite::Mds.metadata_valid?(INVALID_METADATA), false
+    assert_equal Datacite::Mds.validation_errors.size, 1
+  end  
 
 end
