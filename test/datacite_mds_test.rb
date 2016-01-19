@@ -17,9 +17,7 @@ class DataciteMdsTest < Minitest::Test
 
   INVALID_METADATA = ( File.read( File.dirname(__FILE__) + '/data_samples/invalid_metadata.xml' ) )
 
-  METADATA_2_HASH = XmlSimple.xml_in( METADATA_2 )
 
-  
 
 
   def setup
@@ -85,10 +83,9 @@ class DataciteMdsTest < Minitest::Test
   def test_it_deletes_metadata
     res = @mds.upload_metadata METADATA_2
     assert_instance_of Net::HTTPCreated, res
-    doi = METADATA_2_HASH['identifier'].first['content']
 
-doc = Nokogiri::XML(METADATA_2)
-puts "======= #{doc.xpath("//identifier[@identifierType='DOI']/text()")}" 
+    doc = Nokogiri::XML(METADATA_2)
+    doi = doc.css("identifier[identifierType='DOI']").text
 
     refute_nil doi
     assert_instance_of String, doi
@@ -106,6 +103,7 @@ puts "======= #{doc.xpath("//identifier[@identifierType='DOI']/text()")}"
   def test_it_detects_invalid_metadata
     assert_equal Datacite::Mds.metadata_valid?(INVALID_METADATA), false
     assert_equal Datacite::Mds.validation_errors.size, 1
-  end  
+  end
+
 
 end
