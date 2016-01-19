@@ -33,6 +33,8 @@ Require the gem
 
     require 'datacite_mds'
 
+### Object creation    
+
 create an Mds object (explicit authorization)
 
     mds = Datacite::Mds.new authorize: {usr: "joe bloggs", pwd: "password"}
@@ -45,20 +47,40 @@ create an Mds object for testing (implicit authorization)
 
 	mds = Datacite::Mds.new testing: true    
 
-resolve a DOI
-
-    res = mds.resolve '10.5072/existing-doi'
-    p res # => <Net::HTTPOK 200 OK readbody=true
+### Metadata operations    
 
 upload metadata
 
-	res = mds.upload_metadata File.read('metadata.xml')
-	p res # => <Net::HTTPCreated 201 Created readbody=true>
+    res = mds.upload_metadata File.read('metadata.xml')
+    p res # => <Net::HTTPCreated 201 Created readbody=true>
 
 delete metadata
 
     res = mds.delete_metadata '10.5072/existing-doi'
     p res # => <Net::HTTPOK 200 OK readbody=true> 
+
+get metadata for existing DOI
+
+    res = mds.get_metadata '10.5072/existing-doi'
+    if res.instance_of? Net::HTTPOK
+        p res.body # shows the xml metadata
+    end    
+
+check if metadata is valid XML for for Datacite Schema (http://schema.datacite.org/meta/kernel-3.1/metadata.xsd) 
+
+    unless Datacite::Mds.metadata_valid?(INVALID_METADATA)
+        Datacite::Mds.validation_errors.each do |error|
+            p "Validation error: #{error}"  
+        end
+    end
+
+
+### DOI operations     
+
+resolve a DOI
+
+    res = mds.resolve '10.5072/existing-doi'
+    p res # => <Net::HTTPOK 200 OK readbody=true
 
 get all DOIs for datacentre
 
@@ -67,8 +89,9 @@ get all DOIs for datacentre
         p res.body.split # show all DOIs
     end
 
-
 mint a DOI
+
+*Note*: before minting a DOI, ensure you have uploaded metadata for that DOI, by using the *#upload_metadata* method.
 
 	res = mds.mint '10.5072/non-existing-doi', 'http://ora.ox.ac.uk/objects/uuid:<an-existing-uuid>'
 	p res # => <Net::HTTPCreated 201 Created readbody=true>	
@@ -79,12 +102,7 @@ update dataset for existing DOI
 	res = mds.mint '10.5072/existing-doi', 'http://ora.ox.ac.uk/objects/uuid:<new-uuid>'	
 	p res # => <Net::HTTPCreated 201 Created readbody=true>	
 
-get metadata for existing DOI
 
-  	res = mds.get_metadata '10.5072/existing-doi'
-    if res.instance_of? Net::HTTPOK
-        p res.body # shows the xml metadata
-    end
 
 ## Tests
 
