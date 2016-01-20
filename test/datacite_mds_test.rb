@@ -15,8 +15,9 @@ class DataciteMdsTest < Minitest::Test
 
   MALFORMED_METADATA = ( File.read( File.dirname(__FILE__) + '/data_samples/malformed_metadata.xml' ) )
 
-  INVALID_METADATA = ( File.read( File.dirname(__FILE__) + '/data_samples/invalid_metadata.xml' ) )
+  INVALID_METADATA_1 = ( File.read( File.dirname(__FILE__) + '/data_samples/invalid_metadata.xml' ) )
 
+  INVALID_METADATA_2 = ( File.read( File.dirname(__FILE__) + '/data_samples/invalid_metadata_2.xml' ) )
 
 
 
@@ -101,9 +102,15 @@ class DataciteMdsTest < Minitest::Test
   end
 
   def test_it_detects_invalid_metadata
-    assert_equal Datacite::Mds.metadata_valid?(INVALID_METADATA), false
-    assert_equal Datacite::Mds.validation_errors.size, 1
+    assert_equal Datacite::Mds.metadata_valid?(INVALID_METADATA_1), false
+    assert_equal Datacite::Mds.validation_errors.size, 1       
   end
 
+
+  def test_it_detects_invalid_metadata_one_error_at_a_time
+  	assert_equal Datacite::Mds.metadata_valid?(INVALID_METADATA_1), false
+    assert_equal Datacite::Mds.metadata_valid?(INVALID_METADATA_2), false
+    assert_equal Datacite::Mds.validation_errors.size, 1   
+  end
 
 end
