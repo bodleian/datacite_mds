@@ -7,7 +7,8 @@ module Datacite
 
   ENDPOINT = 'https://mds.datacite.org/'
   RESOURCES = { doi: '/doi', metadata: '/metadata', media: '/media' }
-  DATACITE_SCHEMA = Nokogiri::XML::Schema(File.open("data/xsd/datacite-metadata-v3.1.xsd"))
+  XSD_PATH = File.join( __dir__, "../data/xsd/datacite-metadata-v3.1.xsd" )
+  DATACITE_SCHEMA = Nokogiri::XML::Schema(File.open(XSD_PATH))
 
 
   # Wraps up Mds functionality wihin an object
