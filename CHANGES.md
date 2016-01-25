@@ -15,3 +15,8 @@
 -----------
 
 - Added 'delete metadata' functionality
+
+0.3.0
+-----------
+
+- Added metadata XML schema validation functionality
