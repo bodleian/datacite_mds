@@ -6,8 +6,8 @@ require 'datacite_mds/version'
 Gem::Specification.new do |spec|
   spec.name          = "datacite_mds"
   spec.version       = DataciteMds::VERSION
-  spec.authors       = ["Fred Heath", "Michael Davis"]
-  spec.email         = ["michael.davis@bodleian.ox.ac.uk"]
+  spec.authors       = ["Fred Heath", "Michael Davis", "Thomas Wrobel"]
+  spec.email         = ["thomas.wrobel@bodleian.ox.ac.uk"]
 
   spec.summary       = %q{This gem allows for Ruby client connectivity to Datacite's Metadata Store (https://mds.datacite.org/)}
   spec.description   = %q{The MDS is a service for data publishers to mint DOIs and register associated metadata. It is aimed mainly at scientific and research data publishers. This gem allows for simple and seamless interaction with this service.}
@@ -25,7 +25,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "yard"
   spec.add_development_dependency "travis"
   spec.add_development_dependency "coveralls"
-
+ 
   spec.add_dependency "nokogiri", "~> 1.6"
+
 
 end
